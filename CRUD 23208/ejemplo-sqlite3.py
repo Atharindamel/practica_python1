@@ -3,15 +3,15 @@ import sqlite3 as sq3 #Import la librería que maneja la BBDD
 con = sq3.connect('mi_db.db')
 cur = con.cursor()
 
-instruct1 = '''CREATE TABLE IF NOT EXISTS escuelas (
-  _id INTEGER PRIMARY KEY AUTOINCREMENT,  
+instruct1 = '''CREATE TABLE escuelas (
+  _id INTEGER PRIMARY KEY,  
   nombre varchar(45) DEFAULT NULL,
   localidad varchar(45) DEFAULT NULL,
   provincia varchar(45) DEFAULT NULL,
   capacidad INTEGER DEFAULT NULL)''';
 
-instruct2 = '''CREATE TABLE IF NOT EXISTS alumnos (
-	_id INTEGER PRIMARY KEY AUTOINCREMENT,
+instruct2 = '''CREATE TABLE alumnos (
+	_id INTEGER PRIMARY KEY,
 	id_escuela INTEGER DEFAULT NULL,
 	legajo INTEGER DEFAULT NULL,
 	apellido VARCHAR(50) DEFAULT NULL,
@@ -19,8 +19,7 @@ instruct2 = '''CREATE TABLE IF NOT EXISTS alumnos (
 	nota DECIMAL(10,0) DEFAULT NULL,
 	grado INTEGER DEFAULT NULL,
 	email VARCHAR(50) DEFAULT NULL,
-	FOREIGN KEY (id_escuela) REFERENCES escuelas(id))
-)''';
+	FOREIGN KEY (id_escuela) REFERENCES escuelas(_id))''';
 
 #cur.execute(instruct1)
 #cur.execute(instruct2)
