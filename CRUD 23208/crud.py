@@ -1,5 +1,64 @@
 from tkinter import *
+from tkinter import messagebox
+import sqlite3 as sq3
+import matplotlib.pyplot as plt
 
+# Entorno virtual
+''' primera vez deben instalar con
+    pip install virtualenv
+
+CREAR ENTORNO VIRTUAL
+virtualenv {nombre}
+ej: virtualenv venv
+
+ACTIVAR el entorno virtual
+{Nombre del entorno virtual}\Scirpt\activate
+
+INSTALAR LIBRERÍAS
+pip install {nombreLibrería} (En este caso es "matplotlib")
+
+VER QUE HAY INSTALADO EN EL ENTORNO VIRTUAL
+
+DESCTIVAR el entorno virtual
+deactivate
+
+GRABAR en un archivo los requerimientos del entorno
+PIP freeze > requirements.txt
+
+Al distribuir el proyecto, solo llevo los archivos py, gráficos, etc y requirements.txt. en la máquina de
+destino, creo un entorno virtual e instalo los requerimientos pip install -r requeriments.txt
+
+DOCUMENTACIÓN: https://virtualenv.pypa.io/en/stable/index.html
+
+'''
+
+'''
+******************************
+Parte funcional
+******************************
+'''
+# *****MENÚ*****
+# BBDD-Conectar
+def conectar():
+    global con
+    global cur
+    con = sq3.connect('mi_db.db')
+    cur = con.cursor()
+    messagebox.showinfo("STATUS","¡Conectado a la BBDD!")
+
+# BBDD - Salir
+def salir():
+    resp = messagebox.askquestion("CONFIRME", "¿Desea salir de la aplicación?")
+    if resp == 'yes':
+        con.close()
+        raiz.destroy()
+    
+
+'''
+******************************
+Interfaz gráfica
+******************************
+'''
 #Framecampos
 color_fondo = 'cyan'
 color_letra = 'black'
@@ -19,9 +78,9 @@ raiz.config(menu=barramenu)
 
 #Menú de BBDD
 bbddmenu = Menu(barramenu, tearoff=0)
-bbddmenu.add_command(label = 'Conectar a la base de datos')
+bbddmenu.add_command(label = 'Conectar a la base de datos', command=conectar)
 bbddmenu.add_command(label = 'Listado de alumnos')
-bbddmenu.add_command(label = 'Salir')
+bbddmenu.add_command(label = 'Salir', command=salir)
 
 # Menú estadísticas
 estadmenu = Menu(barramenu, tearoff=0)
